@@ -55,15 +55,6 @@ This application implements an outbound voice call trigger, 4-digit OTP DTMF aut
 
 ## 2. Configuration & Default Parameters
 
-| Parameter | Default / Configured Value | Purpose |
-| :--- | :--- | :--- |
-| **Plivo Auth ID** | `MAMTAWMGI0MZCTNTYZZS` | Plivo Account Identifier |
-| **Plivo Auth Token** | `NDc4YTBiMTQtM2E1MS00ZDBlLWI3YjgtNjQ3NDUw` | Plivo Authentication Secret |
-| **Caller ID (Plivo Number)** | `+918035454161` | Outbound Source Phone Number |
-| **Live Associate Number** | `02264236412` | Call Transfer Target |
-| **Auth OTP** | `1503` | Hardcoded Birthdate (`DDMM` format) |
-| **Audio File URL** | `https://s3.amazonaws.com/plivocloud/Trumpet.mp3` | MP3 audio stream for Action 1 |
-
 ---
 
 ## 3. Directory Layout
