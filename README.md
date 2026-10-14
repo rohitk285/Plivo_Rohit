@@ -135,21 +135,6 @@ Copy the example environment template into `backend/.env`:
 ```bash
 cp backend/.env.example backend/.env
 ```
-
-Open `backend/.env` and verify your credentials:
-```env
-PORT=3000
-BASE_URL=http://localhost:3000
-
-# Plivo API Credentials
-PLIVO_AUTH_ID=MAMTAWMGI0MZCTNTYZZS
-PLIVO_AUTH_TOKEN=NDc4YTBiMTQtM2E1MS00ZDBlLWI3YjgtNjQ3NDUw
-PLIVO_NUMBER=+918035454161
-
-# IVR Target Configuration
-LIVE_ASSOCIATE_NUMBER=02264236412
-HARDCODED_OTP=1503
-AUDIO_URL=https://s3.amazonaws.com/plivocloud/Trumpet.mp3
 ```
 
 ---
