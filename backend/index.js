@@ -19,8 +19,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve frontend static assets from public/
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve frontend static assets from client/ (or public/ if present)
+const clientDir = path.resolve(__dirname, '../client');
+const publicDir = path.resolve(__dirname, 'public');
+app.use(express.static(clientDir));
+app.use(express.static(publicDir));
+
+// Fallback route for root to guarantee index.html delivery
+app.get('/', (req, res) => {
+  res.sendFile(path.join(clientDir, 'index.html'));
+});
 
 // Mount API routes
 app.use('/api', callRoutes);

@@ -6,6 +6,10 @@
     "test": "npm --prefix backend test",
     "start": "npm --prefix backend start",
     "dev": "npm --prefix backend run dev",
-    "call": "npm --prefix backend run call"
+    "call": "npm --prefix backend run call",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f"
   }
 }

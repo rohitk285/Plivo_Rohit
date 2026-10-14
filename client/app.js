@@ -19,10 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let activeCallUuid = null;
 
+  // Determine API base URL (relative if served by backend, or localhost:3000 if served independently)
+  const API_BASE = (window.location.port === '3000' || !window.location.port || window.location.protocol === 'https:')
+    ? ''
+    : 'http://localhost:3000';
+
   // 1. Fetch system configuration
   async function loadConfig() {
     try {
-      const res = await fetch('/api/config');
+      const res = await fetch(`${API_BASE}/api/config`);
       const data = await res.json();
       if (data.success && data.configured) {
         cfgCallerId.textContent = data.configured.callerId || 'Not set';
@@ -38,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Fetch and render call logs
   async function loadLogs() {
     try {
-      const res = await fetch('/api/calls');
+      const res = await fetch(`${API_BASE}/api/calls`);
       const data = await res.json();
       if (!data.success || !data.calls || data.calls.length === 0) {
         return;
@@ -102,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     responsePanel.style.display = 'none';
 
     try {
-      const res = await fetch('/api/make-call', {
+      const res = await fetch(`${API_BASE}/api/make-call`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ toNumber }),
@@ -154,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
           body: bodyJson || undefined,
         };
 
-        const res = await fetch(url, options);
+        const res = await fetch(`${API_BASE}${url}`, options);
         const text = await res.text();
         xmlOutputBox.textContent = formatXml(text);
         loadLogs();
