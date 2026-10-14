@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InspireWorks Plivo IVR Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <div class="badge-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1>InspireWorks IVR Console</h1>
+          <p class="subtitle">Plivo Voice API • Outbound Calling • Multi-Level IVR</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="status-indicator online">
+          <span class="dot"></span> Backend Active
+        </span>
+      </div>
+    </header>
+
+    <!-- Configuration Bar -->
+    <section class="config-bar" id="config-bar">
+      <div class="config-pill">
+        <span class="label">Caller ID:</span>
+        <span class="val" id="cfg-caller-id">+918035454161</span>
+      </div>
+      <div class="config-pill">
+        <span class="label">Live Associate:</span>
+        <span class="val" id="cfg-associate-num">02264236412</span>
+      </div>
+      <div class="config-pill">
+        <span class="label">Auth OTP:</span>
+        <span class="val" id="cfg-otp">1503 (DDMM)</span>
+      </div>
+      <div class="config-pill">
+        <span class="label">Webhook Base URL:</span>
+        <span class="val" id="cfg-base-url">Loading...</span>
+      </div>
+    </section>
+
+    <!-- Main Grid -->
+    <main class="dashboard-grid">
+      <!-- Left Column: Trigger Outbound Call & Flow Inspector -->
+      <section class="card call-trigger-card">
+        <div class="card-header">
+          <div class="title-with-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <h2>Initiate Outbound Call</h2>
+          </div>
+          <span class="badge">API Trigger</span>
+        </div>
+
+        <form id="call-form" class="call-form">
+          <div class="form-group">
+            <label for="phone-number">Target Phone Number</label>
+            <div class="input-wrapper">
+              <span class="input-icon">📞</span>
+              <input 
+                type="tel" 
+                id="phone-number" 
+                name="phone-number" 
+                placeholder="+919876543210" 
+                required 
+                autocomplete="tel"
+              />
+            </div>
+            <small class="help-text">Include country code (e.g., +91 for India, +1 for US).</small>
+          </div>
+
+          <button type="submit" id="btn-trigger-call" class="primary-btn">
+            <span class="btn-text">Initiate Call via Plivo</span>
+            <span class="spinner" style="display: none;"></span>
+          </button>
+        </form>
+
+        <div id="call-response-panel" class="response-panel" style="display: none;">
+          <div class="response-status" id="response-status-badge">Call Initiated</div>
+          <div class="response-details" id="response-details"></div>
+        </div>
+
+        <!-- IVR Flow Diagram -->
+        <div class="ivr-flow-preview">
+          <h3>IVR Architecture & Steps</h3>
+          <div class="flow-steps">
+            <div class="step-item">
+              <div class="step-num">0</div>
+              <div class="step-content">
+                <strong>OTP Authentication (DTMF)</strong>
+                <p>Prompt user for 4-digit OTP (DDMM). Invalid attempts loop back.</p>
+              </div>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <strong>Language Selection</strong>
+                <p>Press 1 for English • Presione 2 para Español</p>
+              </div>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <strong>Action Selection</strong>
+                <p>Press 1: Audio Playback (Trumpet.mp3) • Press 2: Forward to Live Associate</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Live Event Tracker & XML Simulator -->
+      <section class="card logs-card">
+        <div class="card-header">
+          <div class="title-with-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <h2>Live Call Events & Logs</h2>
+          </div>
+          <div class="header-actions">
+            <button id="btn-refresh-logs" class="icon-btn" title="Refresh Logs">⟳</button>
+            <button id="btn-clear-logs" class="text-btn">Clear View</button>
+          </div>
+        </div>
+
+        <div class="logs-container" id="logs-feed">
+          <div class="empty-state" id="empty-state">
+            <p>No active calls yet. Trigger an outbound call to see real-time status and IVR events.</p>
+          </div>
+        </div>
+
+        <!-- XML Test & Simulator Tool -->
+        <div class="xml-tester-drawer">
+          <div class="drawer-header">
+            <h4>Quick Endpoint Tester (Plivo XML Inspector)</h4>
+            <span class="drawer-hint">Inspect XML responses without dialer</span>
+          </div>
+          <div class="simulator-buttons">
+            <button class="sim-btn" data-url="/ivr/otp-prompt">0. Prompt OTP</button>
+            <button class="sim-btn" data-url="/ivr/otp-verify" data-body='{"Digits":"0000"}'>Invalid OTP (0000)</button>
+            <button class="sim-btn" data-url="/ivr/otp-verify" data-body='{"Digits":"1503"}'>Valid OTP (1503)</button>
+            <button class="sim-btn" data-url="/ivr/level1-lang">Level 1 (Lang)</button>
+            <button class="sim-btn" data-url="/ivr/level1-process" data-body='{"Digits":"1"}'>Select English</button>
+            <button class="sim-btn" data-url="/ivr/level1-process" data-body='{"Digits":"2"}'>Select Spanish</button>
+            <button class="sim-btn" data-url="/ivr/level2-process?lang=en" data-body='{"Digits":"1"}'>Action 1: Play Audio</button>
+            <button class="sim-btn" data-url="/ivr/level2-process?lang=en" data-body='{"Digits":"2"}'>Action 2: Dial Associate</button>
+          </div>
+          <pre class="xml-output" id="xml-output-box">&lt;!-- Click any button above to preview live Plivo XML response --&gt;</pre>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>InspireWorks Plivo Voice Integration • Developed for Voice IVR Assessment</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

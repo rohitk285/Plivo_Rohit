@@ -1,0 +1,11 @@
+{
+  "name": "plivo-ivr",
+  "version": "1.0.0",
+  "description": "InspireWorks Plivo Voice IVR Application",
+  "scripts": {
+    "test": "npm --prefix backend test",
+    "start": "npm --prefix backend start",
+    "dev": "npm --prefix backend run dev",
+    "call": "npm --prefix backend run call"
+  }
+}
